@@ -1,0 +1,161 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Poppins;
+  color: #444;
+  box-sizing: border-box;
+}
+
+html, body {
+  position: relative;
+}
+
+h1 {
+  font-size: 75px;
+  font-weight: 100;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.relative-wrapper {
+  position: relative;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 1.5em;
+}
+
+#shows-section .calendar-wrapper .view-full-calendar button, #landing-wrapper #landing-intro .cta button {
+  font-size: 1.2em;
+  outline: none;
+  background: none;
+  border: 2px solid #444;
+  padding: 0.5em 2em;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+#shows-section .calendar-wrapper .view-full-calendar button:hover, #landing-wrapper #landing-intro .cta button:hover {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+#shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .show-btns button {
+  width: 200px;
+  font-size: 1em;
+  border: 2px solid #444;
+  outline: none;
+  background: none;
+  margin: 0.1em 0;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+#main-nav {
+  position: relative;
+  z-index: 1000;
+}
+#main-nav .nav-wrapper .nav-left #logo-wrapper {
+  opacity: 0;
+}
+#main-nav .nav-wrapper .nav-left #logo-wrapper p {
+  font-size: 2em;
+}
+#main-nav .nav-wrapper .nav-right a {
+  margin-left: 2em;
+}
+
+#landing-wrapper #landing-intro {
+  text-align: right;
+  padding: 15% 20% 25% 20%;
+}
+#landing-wrapper #landing-intro .cta {
+  text-align: center;
+  transform: translateX(28%);
+}
+#landing-wrapper #landing-intro .cta h2 {
+  margin: -0.5em 0 0.5em 0;
+}
+#shows-section {
+  background-color: #fff;
+  padding: 2em 6em;
+}
+#shows-section .calendar-wrapper {
+  min-width: 650px;
+}
+#shows-section .calendar-wrapper .dates-links span {
+  margin-right: 0.7em;
+}
+#shows-section .calendar-wrapper .dates-links .dates-active {
+  color: #a9c5e8;
+}
+#shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper {
+  padding: 0.5em 0;
+  border-bottom: 2px solid #444;
+  display: flex;
+  align-items: center;
+}
+#shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .calendar-col {
+  flex: 1;
+}
+#shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .show-date p {
+  font-size: 1.3em;
+}
+#shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .show-city {
+  font-style: italic;
+}
+#shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .show-venue {
+  font-size: 1.2em;
+}
+#shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .show-btns {
+  text-align: right;
+}
+#shows-section .calendar-wrapper .view-full-calendar {
+  text-align: center;
+  padding: 1em 0;
+}
+#about-section {
+  position: relative;
+}
+
+#press-section {
+  background-color: #fcf9f3;
+}
+
+#music-section {
+  background-color: #fff;
+  padding: 2em 6em;
+}
+
+#videos-section {
+  background-color: #fff;
+  padding: 2em 6em;
+}
+
+@keyframes show-up {
+  0% {
+    opacity: 0;
+    transform: translateY(25%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.show-up {
+  animation-name: show-up;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+/*# sourceMappingURL=main.css.map */

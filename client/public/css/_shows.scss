@@ -1,0 +1,58 @@
+#shows-section {
+  background-color: #fff;
+  padding: 2em 6em;
+  
+  .calendar-wrapper {
+    min-width: 650px;
+
+    .dates-links {
+      span {
+        margin-right: 0.7em;
+      }
+
+      .dates-active {
+        color: #a9c5e8;
+      }
+    }
+
+    .calendar-row {
+      .calendar-row-wrapper {
+        padding: 0.5em 0;
+        border-bottom: 2px solid #444;
+        display: flex;
+        align-items: center;
+
+        .calendar-col {
+          flex: 1;
+        }
+
+        .show-date p{
+          font-size: 1.3em;
+        }
+
+        .show-city {
+          font-style: italic;
+        }
+
+        .show-venue {
+          font-size: 1.2em;
+        }
+
+        .show-btns {
+          text-align: right;
+          button {
+            @extend %button2-styles;
+          }
+        }
+      }
+    }
+
+    .view-full-calendar {
+      text-align: center;
+      padding: 1em 0;
+      button {
+        @extend %button-styles;
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Poppins;
+  color: #444;
+  box-sizing: border-box;
+}
+
+html, body {
+  position: relative;
+}
+
+h1 {
+  font-size: 75px;
+  font-weight: 100;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.relative-wrapper {
+  position: relative;
+}
+
+%button-styles {
+  font-size: 1.2em;
+  outline: none;
+  background: none;
+  border: 2px solid #444;
+  padding: 0.5em 2em;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+%button-styles:hover {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+%button2-styles {
+  font-size: 1em;
+  background-color: #fdf5e7;
+  padding: 1em;
+  border-radius: 30px;
+  border: none;
+  margin-right: 1em;
+  cursor: pointer;
+}
+
+@import 'nav';
+@import 'landing';
+@import 'shows';
+@import 'about';
+@import 'press';
+@import 'music';
+@import 'videos';
+@import 'animations';
