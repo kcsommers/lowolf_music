@@ -29,7 +29,12 @@ a {
   position: relative;
 }
 
-#shows-section .calendar-wrapper .view-full-calendar button, #landing-wrapper #landing-intro .cta button {
+.section-title {
+  text-align: center;
+  padding-bottom: 1.5em;
+}
+
+#landing-wrapper #landing-intro .cta button {
   font-size: 1.2em;
   outline: none;
   background: none;
@@ -39,23 +44,35 @@ a {
   cursor: pointer;
 }
 
-#shows-section .calendar-wrapper .view-full-calendar button:hover, #landing-wrapper #landing-intro .cta button:hover {
+#landing-wrapper #landing-intro .cta button:hover {
   background-color: #fff;
   border-color: #fff;
+}
+
+#shows-section .calendar-wrapper .view-full-calendar button, #shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .show-btns button {
+  font-size: 1em;
+  background-color: #fdf5e7;
+  padding: 1em;
+  border-radius: 30px;
+  border: none;
+  margin-right: 1em;
+  cursor: pointer;
 }
 
 #main-nav {
   position: relative;
   z-index: 1000;
 }
-#main-nav .nav-wrapper .nav-left #logo-wrapper {
-  opacity: 0;
-}
 #main-nav .nav-wrapper .nav-left #logo-wrapper p {
   font-size: 2em;
 }
 #main-nav .nav-wrapper .nav-right a {
   margin-left: 2em;
+}
+#main-nav .nav-wrapper .nav-right a i {
+  font-size: 1.5em;
+  transform: translateY(2px);
+  color: #a9c5e8;
 }
 
 #landing-wrapper #landing-intro {
@@ -102,16 +119,6 @@ a {
 }
 #shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .show-btns {
   text-align: right;
-}
-#shows-section .calendar-wrapper .calendar-row .calendar-row-wrapper .show-btns button {
-  width: 200px;
-  font-size: 1em;
-  border: 2px solid #444;
-  outline: none;
-  background: none;
-  margin: 0.1em 0;
-  cursor: pointer;
-  border-radius: 2px;
 }
 #shows-section .calendar-wrapper .view-full-calendar {
   text-align: center;
