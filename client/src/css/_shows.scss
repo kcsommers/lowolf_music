@@ -41,14 +41,7 @@
         .show-btns {
           text-align: right;
           button {
-            width: 200px;
-            font-size: 1em;
-            border: 2px solid #444;
-            outline: none;
-            background: none;
-            margin: 0.1em 0;
-            cursor: pointer;
-            border-radius: 2px;
+            @extend %button2-styles;
           }
         }
       }
@@ -58,7 +51,7 @@
       text-align: center;
       padding: 1em 0;
       button {
-        @extend %button-styles;
+        @extend %button2-styles;
       }
     }
   }
