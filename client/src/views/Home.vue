@@ -25,6 +25,10 @@
       <ParallaxBackground :image="require('@/assets/images/about_bg.png')" :section="'about-section'" />
     </section>
 
+    <section class="section" id="subscribe-section">
+      <Subscribe />
+    </section>
+
   </div>
 </template>
 
@@ -36,6 +40,7 @@ import Calendar from '@/components/Calendar'
 import Music from '@/components/Music'
 import Videos from '@/components/Videos'
 import About from '@/components/About'
+import Subscribe from '@/components/Subscribe'
 
 export default {
   name: 'home',
@@ -45,7 +50,8 @@ export default {
     Calendar,
     Music,
     Videos,
-    About
+    About,
+    Subscribe
   }
 }
 </script>

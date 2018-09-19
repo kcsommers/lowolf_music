@@ -1,8 +1,8 @@
 <template>
   <nav class="nav" id="main-nav" ref="main-nav">
-    <div class="nav-wrapper" v-bind:style="styleObject">
+    <div class="nav-wrapper" v-bind:style="navStyle">
       <div class="nav-left">
-        <div id="logo-wrapper">
+        <div :style="logoStyle" id="logo-wrapper">
           <p>Lo Wolf</p>
         </div>
       </div>
@@ -12,6 +12,9 @@
         <a href="#">Media</a>
         <a href="#">Store</a>
         <a href="#">Contact</a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
       </div>
     </div>
   </nav>
@@ -23,7 +26,7 @@ export default {
   nav: '',
   data() {
     return {
-      styleObject: {
+      navStyle: {
         display: 'flex',
         justifyContent: 'space-between',
         height: '100px',
@@ -33,18 +36,24 @@ export default {
         width: '100%',
         backgroundColor: 'rgba(0,0,0,0)',
         transition: 'all 0.6s ease'
+      },
+      logoStyle: {
+        opacity: 0,
+        transition: 'all 0.6s ease'
       }
     }
   },
   methods: {
     setNavHeight() {
       if(window.scrollY > 0) {
-        this.styleObject.height = '70px'
-        this.styleObject.backgroundColor = '#fdf5e6'
+        this.navStyle.height = '70px'
+        this.navStyle.backgroundColor = '#fdf5e6'
+        this.logoStyle.opacity = 1
       }
       else {
-        this.styleObject.height = '100px'
-        this.styleObject.backgroundColor = 'rgba(0,0,0,0)'
+        this.navStyle.height = '100px'
+        this.navStyle.backgroundColor = 'rgba(0,0,0,0)'
+        this.logoStyle.opacity = 0
       }
     }
   },

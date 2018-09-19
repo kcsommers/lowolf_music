@@ -6,39 +6,12 @@ const port = process.env.PORT || 3000;
 const db = require('./models');
 const cors = require('cors');
 const origin = process.env.CORS_ORIGIN;
+const bcrypt = require('bcrypt');
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 app.use(express.static(__dirname + '/static'));
 app.use(bp.json());
-
-const authCheck = jwt({
-  secret: jwks.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: "https:///.well-known/jwks.json"
-    }),
-    // This is the identifier we set when we created the API
-    audience: '{YOUR-API-AUDIENCE-ATTRIBUTE}',
-    issuer: "https://{YOUR-AUTH0-DOMAIN}.auth0.com/",
-    algorithms: ['RS256']
-});
-
-app.get('/api/battles/public', (req, res) => {
-  let publicBattles = [
-    // Array of public battles
-  ];
-
-  res.json(publicBattles);
-})
-
-app.get('/api/battles/private', authCheck, (req,res) => {
-  let privateBattles = [
-    // Array of private battles
-  ];
-
-  res.json(privateBattles);
-})
+app.use(cors({origin}));
 
 // GET /shows - retrieve and send shows from database
 app.get('/shows', cors({origin}), function(req, res) {
@@ -72,7 +45,17 @@ app.post('/shows', function(req, res) {
   }).then((data) => {
     res.sendStatus(200);
   })
-})
+});
+
+app.post('/subscribe', function(req, res) {
+  console.log("HIT POST SUBSCRIBE ROUTE");
+  db.subscriber.create({
+    name: req.body.name,
+    email: req.body.email
+  }).then(function(data) {
+    res.send(data);
+  });
+});
 
 app.listen(port, () => {
     console.log(`Hooked on ${port}`);

@@ -19,13 +19,14 @@ export default {
 <style lang="scss">
   @import '@/css/main.scss';
   #about-wrapper {
-    padding: 2em 6em;
+    padding: 6em 6em;
     #bio-wrapper {
       #bio {
         border: 5px solid #444;
         padding: 2em;
         font-size: 1.3em;
         margin-bottom: 2em;
+        color: #fff;
       }
     }
     #go-to-blog {

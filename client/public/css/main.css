@@ -64,14 +64,16 @@ a {
   position: relative;
   z-index: 1000;
 }
-#main-nav .nav-wrapper .nav-left #logo-wrapper {
-  opacity: 0;
-}
 #main-nav .nav-wrapper .nav-left #logo-wrapper p {
   font-size: 2em;
 }
 #main-nav .nav-wrapper .nav-right a {
   margin-left: 2em;
+}
+#main-nav .nav-wrapper .nav-right a i {
+  font-size: 1.5em;
+  transform: translateY(2px);
+  color: #a9c5e8;
 }
 
 #landing-wrapper #landing-intro {
