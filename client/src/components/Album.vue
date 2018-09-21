@@ -12,7 +12,7 @@
         <p class="track"><span>3. Dog 1</span><span><i class="far fa-play-circle"></i></span></p>
         <p class="track"><span>4. Gone are the Days</span><span><i class="far fa-play-circle"></i></span></p>
       </div>
-      <form class="add-to-cart-form">
+      <form @submit="handleSubmit" class="add-to-cart-form">
         <input type="submit" value="Add to Cart" />
         <select v-model="selected">
           <option v-for="(option) in options" 
@@ -31,17 +31,25 @@ export default {
   name: 'Album',
   data() {
     return {
-      selected: 0,
+      selected: 2,
       options: [
         {
           text: 'Country Pop Hit EP - Hard Copy', 
-          id: 0
+          id: 2
         },
         {
           text: 'Country Pop Hit EP - Digital Download',
-          id: 1
+          id: 3
         }
       ]
+    }
+  },
+  methods: {
+    handleSubmit(e) {
+      e.preventDefault()
+      let cart = sessionStorage.hasOwnProperty('loCart') ? JSON.parse(sessionStorage.getItem('cart')) : {items: []}
+      cart.items.push(this.selected)
+      sessionStorage.setItem('loCart', JSON.stringify(cart))
     }
   }
 }
@@ -76,10 +84,14 @@ export default {
         .track {
           font-size: 1em;
           border-bottom: 1px solid #444;
-          padding: 0.2em 0;
+          padding: 0.2em;
           cursor: pointer;
           display: flex;
           justify-content: space-between;
+          transition: all 0.2s ease;
+        }
+        .track:hover {
+          box-shadow: 2px 5px 15px #888;
         }
       }
 
@@ -89,6 +101,9 @@ export default {
           background-color: #fff;
           border: none;
           outline: none;
+          box-shadow: 2px 5px 10px #888;
+          font-size: 1em;
+          margin-left: 1em;
 
           option {
             padding: 2em;

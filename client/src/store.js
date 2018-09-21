@@ -5,10 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    page: 'home'
   },
   mutations: {
-
+    pageChange(state, payload) {
+      state.page = payload.page
+    }
   },
   actions: {
 

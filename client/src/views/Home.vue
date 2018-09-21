@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <main id="home">
     <section class="section" id="landing-section">
       <Landing />
       <ParallaxBackground :image="require('@/assets/images/lo_paisley.png')" :section="'landing-section'" />
@@ -28,8 +28,7 @@
     <section class="section" id="subscribe-section">
       <Subscribe />
     </section>
-
-  </div>
+  </main>
 </template>
 
 <script>
@@ -56,7 +55,17 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '@/css/main.scss';
+#home {
+  #music-section, #shows-section, #videos-section {
+    background-color: #fff;
+    padding: 2em 6em;
+  }
+  #about-section {
+    position: relative;
+  }
+}
   
 </style>
 
