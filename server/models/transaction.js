@@ -1,0 +1,13 @@
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  var transaction = sequelize.define('transaction', {
+    buyer: DataTypes.STRING,
+    email: DataTypes.STRING,
+    address: DataTypes.STRING,
+    fulfilled: DataTypes.BOOLEAN
+  }, {});
+  transaction.associate = function(models) {
+    // associations can be defined here
+  };
+  return transaction;
+};

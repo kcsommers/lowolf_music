@@ -1,16 +1,16 @@
 <template>
   <nav class="nav" id="main-nav" ref="main-nav">
-    <div class="nav-wrapper" v-bind:style="navStyle">
+    <div class="nav-wrapper" :style="navStyle" :class="{transparent}">
       <div class="nav-left">
         <div :style="logoStyle" id="logo-wrapper">
-          <p>Lo Wolf</p>
+          <router-link to="/">Lo Wolf</router-link>
         </div>
       </div>
       <div class="nav-right">
         <a href="#">About</a>
         <a href="#">Music</a>
         <a href="#">Media</a>
-        <a href="#">Store</a>
+        <router-link to="/cart" @click.native="changePage('cart')">Cart</router-link>
         <a href="#">Contact</a>
         <a href="#"><i class="fab fa-facebook"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -55,6 +55,9 @@ export default {
         this.navStyle.backgroundColor = 'rgba(0,0,0,0)'
         this.logoStyle.opacity = 0
       }
+    },
+    changePage(page) {
+      this.$store.commit('pageChange', {page})
     }
   },
   created() {
@@ -62,3 +65,42 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+#main-nav {
+  position: relative;
+  z-index: 1000;
+
+  .transparent-nav {
+    height: 100px;
+    background-color: rgba(0,0,0,0);
+  }
+
+  .color-nav {
+    height: 70px;
+    background-color: #fdf5e6;
+  }
+
+  .nav-wrapper {
+    .nav-left {
+      #logo-wrapper {
+        a {
+          font-size: 2em;
+        }
+      }
+    }
+
+    .nav-right {
+      a {
+        margin-left: 2em;
+
+        i {
+          font-size: 1.5em;
+          transform: translateY(2px);
+          color: #a9c5e8;
+        }
+      }
+    }
+  }
+}
+</style>
+

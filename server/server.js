@@ -6,12 +6,13 @@ const port = process.env.PORT || 3000;
 const db = require('./models');
 const cors = require('cors');
 const origin = process.env.CORS_ORIGIN;
-const bcrypt = require('bcrypt');
-const jwt = require('express-jwt');
-const jwks = require('jwks-rsa');
+const jwt = require('jsonwebtoken');
+const auth = require('./controllers/auth');
+
 app.use(express.static(__dirname + '/static'));
 app.use(bp.json());
 app.use(cors({origin}));
+app.use('/auth', auth.router);
 
 // GET /shows - retrieve and send shows from database
 app.get('/shows', cors({origin}), function(req, res) {
@@ -35,6 +36,7 @@ app.get('/shows', cors({origin}), function(req, res) {
   });
 });
 
+// POST /shows - create a new show
 app.post('/shows', function(req, res) {
   console.log('HIT SHOWS POST ROUTE')
   db.show.create({
@@ -47,6 +49,7 @@ app.post('/shows', function(req, res) {
   })
 });
 
+// POST /subscribe - create a new subscriber
 app.post('/subscribe', function(req, res) {
   console.log("HIT POST SUBSCRIBE ROUTE");
   db.subscriber.create({
@@ -54,6 +57,36 @@ app.post('/subscribe', function(req, res) {
     email: req.body.email
   }).then(function(data) {
     res.send(data);
+  });
+});
+
+// POST /items - retrieve items in cart
+app.post('/items', function(req, res) {
+  let items = [];
+  req.body.items.forEach(function(item) {
+    db.item.findAll({
+      where: {
+        id: item 
+      }
+    }).then(function(result) {
+      items.push(result);
+      res.send(items);
+    });
+  }); 
+});
+
+app.get('/admin', auth.verifyToken, function(req, res) {
+  console.log('HIT PROTECTED ADMIN GET ROUTE');
+  jwt.verify(req.token, process.env.AUTH_SECRET, (err, authData) => {
+    if(err) {
+      res.sendStatus(403);
+    }
+    else {
+      res.json({
+        message: 'ADMIN PAGE',
+        authData
+      });
+    }
   });
 });
 

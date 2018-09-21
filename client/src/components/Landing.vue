@@ -16,6 +16,25 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '@/css/main.scss';
+#landing-wrapper {
+  #landing-intro {
+    text-align: right;
+    padding: 15% 20% 25% 20%;
 
+    .cta {
+      text-align: center;
+      transform: translateX(28%);
+
+      h2 {
+        margin: -0.5em 0 0.5em 0;
+      }
+
+      button {
+        @extend %button-styles;
+      }
+    }
+  }
+}
 </style>
