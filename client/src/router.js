@@ -8,7 +8,7 @@ import AdminPage from './views/AdminPage.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -25,7 +25,10 @@ export default new Router({
     {
       path: '/checkout',
       name: 'checkout',
-      component: Checkout
+      component: Checkout,
+      props(route) {
+        return {cart: route.query.cart}
+      }
     },
     {
       path: '/admin',
@@ -35,7 +38,25 @@ export default new Router({
     {
       path: '/admin-page',
       name: 'admin-page',
-      component: AdminPage
+      component: AdminPage,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  if(to.meta.requiresAuth) {
+    const authUser = JSON.parse(window.localStorage.getItem('authUser'));
+    if(authUser && authUser.token) {
+      next();
+    }
+    else {
+      next({name: 'admin-login'});
+    }
+  }
+  next();
+});
+
+export {router};

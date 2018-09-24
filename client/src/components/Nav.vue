@@ -1,9 +1,9 @@
 <template>
   <nav class="nav" id="main-nav" ref="main-nav">
-    <div class="nav-wrapper" :style="navStyle" :class="{transparent}">
+    <div class="nav-wrapper" :style="navStyle">
       <div class="nav-left">
         <div :style="logoStyle" id="logo-wrapper">
-          <router-link to="/">Lo Wolf</router-link>
+          <router-link to="/" @click.native="changePage('home')">Lo Wolf</router-link>
         </div>
       </div>
       <div class="nav-right">
@@ -45,19 +45,33 @@ export default {
   },
   methods: {
     setNavHeight() {
-      if(window.scrollY > 0) {
+      if(this.$store.state.page === 'home') {
+        if(window.scrollY > 0) {
+          this.navStyle.height = '70px'
+          this.navStyle.backgroundColor = '#fdf5e6'
+          this.logoStyle.opacity = 1
+        }
+        else {
+          this.navStyle.height = '100px'
+          this.navStyle.backgroundColor = 'rgba(0,0,0,0)'
+          this.logoStyle.opacity = 0
+        }
+      }
+    },
+    changePage(page) {
+      this.$store.commit('pageChange', {page})
+      if(page !== 'home') {
         this.navStyle.height = '70px'
         this.navStyle.backgroundColor = '#fdf5e6'
         this.logoStyle.opacity = 1
       }
       else {
-        this.navStyle.height = '100px'
-        this.navStyle.backgroundColor = 'rgba(0,0,0,0)'
-        this.logoStyle.opacity = 0
+        if(window.scrollY === 0) {
+          this.navStyle.height = '100px'
+          this.navStyle.backgroundColor = 'rgba(0,0,0,0)'
+          this.logoStyle.opacity = 0
+        }
       }
-    },
-    changePage(page) {
-      this.$store.commit('pageChange', {page})
     }
   },
   created() {
@@ -70,14 +84,9 @@ export default {
   position: relative;
   z-index: 1000;
 
-  .transparent-nav {
-    height: 100px;
-    background-color: rgba(0,0,0,0);
-  }
-
-  .color-nav {
+  .notHome {
     height: 70px;
-    background-color: #fdf5e6;
+    background-color: 'fdf5e6';
   }
 
   .nav-wrapper {

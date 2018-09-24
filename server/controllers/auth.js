@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const db = require('../models');
 const router = express.Router();
-const passport = require('passport');
+const passport = require('../config/passportConfig');
 
 const passportAuth = passport.authenticate('local', {session: false});
 
@@ -46,13 +46,10 @@ const hashPassword = function(req, res, next) {
 }
 
 router.post('/login', passportAuth, function(req, res) {
-  const user = {
-    id: 1,
-    username: 'Kacy',
-    email: 'kacysommers@gmail.com'
-  }
-  jwt.sign({user}, process.env.AUTH_SECRET, {expiresIn: '1h'}, (err, token) => {
-    res.json({token})
+  const user = req.body;
+  jwt.sign({user}, process.env.AUTH_SECRET, {expiresIn: '1h'}, (error, token) => {
+    if(error) {res.sendStatus(401);}
+    res.json({token, user})
   });
 });
 

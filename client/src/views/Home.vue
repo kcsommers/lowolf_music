@@ -5,21 +5,21 @@
       <ParallaxBackground :image="require('@/assets/images/lo_paisley.png')" :section="'landing-section'" />
     </section>
 
-    <section class="section" id="shows-section">
-      <h2 class="section-title">Shows</h2>
-      <Calendar />
-    </section>
+      <section class="section" id="shows-section">
+        <h2 class="section-title">Shows</h2>
+        <Calendar :full="false" />
+      </section>
 
-    <section class="section" id="music-section">
-      <h2 class="section-title">Music</h2>
-      <Music />
-    </section>
+      <section class="section" id="music-section">
+        <h2 class="section-title">Music</h2>
+        <Music />
+        <ParallaxBackground :image="require('@/assets/images/paisley2_yellow.png')" :section="'music-section'" />
+      </section>
 
-    <section class="section" id="videos-section">
-      <h2 class="section-title">Videos</h2>
-      <Videos />
-    </section>
-
+      <section class="section" id="videos-section">
+        <h2 class="section-title">Videos</h2>
+        <Videos />
+      </section>
     <section class="section" id="about-section">
       <About />
       <ParallaxBackground :image="require('@/assets/images/about_bg.png')" :section="'about-section'" />
@@ -58,14 +58,25 @@ export default {
 <style lang="scss">
 @import '@/css/main.scss';
 #home {
-  #music-section, #shows-section, #videos-section {
-    background-color: #fff;
-    padding: 2em 6em;
-  }
-  #about-section {
+  .section {
     position: relative;
   }
+
+  #landing-section, #about-section, {
+    overflow: hidden;
+  }
+
+  #shows-section, #music-section, #videos-section {
+    padding: 2em 6em;
+  }
+
+  #music-section {
+    .parallax-wrapper {
+      opacity: 1;
+      margin-top: 6em;
+      margin-left: -5em;
+    }
+  }
 }
-  
 </style>
 

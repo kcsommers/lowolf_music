@@ -13,6 +13,8 @@ export default new Vuex.Store({
     }
   },
   actions: {
-
+    changePage() {
+      console.log('SET NAVE HEIGHT', this.$refs)
+    }
   }
 })

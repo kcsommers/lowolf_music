@@ -1,5 +1,6 @@
 <template>
   <div id="admin-login">
+    <h3 v-show="message">{{message}}</h3>
     <div id="login-wrapper">
       <form @submit="handleSubmit">
         <label for="name">Name:
@@ -21,7 +22,9 @@ export default {
   data() {
     return {
       name: '',
-      password: ''
+      password: '',
+      message: '',
+      tries: 0
     }
   },
   methods: {
@@ -31,8 +34,36 @@ export default {
         name: this.name,
         password: this.password
       }
-      const admin = await Api().post('/auth/login', data)
+      try {
+        const authInfo = await Api().post('/auth/login', data)
+        this.requestAdminPage(authInfo.data.user, authInfo.data.token)
+      }
+      catch(err) {
+        this.name = ''
+        this.password = ''
+        this.message = 'No such luck. Give it another go.'
+        this.tries = this.tries + 1
+      }
+    },
+    async requestAdminPage(user, token) {
+      try {
+        const verified = await Api().get('/admin', {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+        console.log('Verified', verified)
+        const authUser = {user: user.name, token}
+        localStorage.setItem('authUser', JSON.stringify(authUser));
+        this.$router.push('admin-page')
+      }
+      catch(err) {
+        this.message = 'Unauthorized'
+      }
     }
+  },
+  mounted() {
+    this.$store.commit('pageChange', {page: 'admin-login'})
   }
 }
 </script>
@@ -40,13 +71,24 @@ export default {
 <style lang="scss">
 @import '@/css/main.scss';
 #admin-login {
+  padding: 8em 0;
+  min-height: calc(100vh - 220px);
+  background-color: #444;
+  h3 {
+    background-color: rgba(232, 59, 70, 0.6);
+    border: 2px solid #e83b46;
+    color: #fff;
+    padding: 0.5em 0;
+    border-radius: 20px;
+    text-align: center;
+    width: 60%;
+    margin: 1em auto;
+  }
+
   #login-wrapper {
-    min-height: calc(100vh - 220px);
-    background-color: #444;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 8em 0;
 
     form {
       width: 60%;

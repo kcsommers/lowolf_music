@@ -28,6 +28,10 @@ export default {
   a {
     font-size: 2em;
     margin: 0 0.2em;
+
+    i {
+      color: #a9c5e8;
+    }
   }
 } 
 </style>

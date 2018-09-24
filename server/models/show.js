@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.STRING,
     venue: DataTypes.STRING,
     city: DataTypes.STRING,
-    link: DataTypes.STRING
+    link: DataTypes.STRING,
+    rsvp: DataTypes.INTEGER
   }, {});
   show.associate = function(models) {
     // associations can be defined here
