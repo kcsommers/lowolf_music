@@ -17,19 +17,22 @@ export default {
         width: '100%',
         top: 0, 
         transform: 'translateY(0)',
-        zIndex: -500
+        zIndex: -500,
+        backgroundColor: '#fff'
       }
     }
   },
   methods: {
     handleScroll() {
-      let section = document.getElementById(String(this.section))
-      let sectionInfo = section.getBoundingClientRect()
-      let imageInfo = section.lastChild.firstChild.getBoundingClientRect()
-      let translate = (this.section == 'landing-section') ? 
-      ((window.scrollY / 2)).toString() + 'px' :
-      (((window.innerHeight - sectionInfo.y) / 2) - (imageInfo.height / 2)).toString() + 'px'
-      this.wrapperStyle.transform = `translateY(${translate})`
+      if(this.$store.state.page === 'home') {
+        let section = document.getElementById(String(this.section))
+        let sectionInfo = section.getBoundingClientRect()
+        let imageInfo = section.lastChild.firstChild.getBoundingClientRect()
+        let translate = (this.section == 'landing-section') ? 
+        ((window.scrollY / 2)).toString() + 'px' :
+        (((window.innerHeight - sectionInfo.y) / 2) - (imageInfo.height / 2)).toString() + 'px'
+        this.wrapperStyle.transform = `translateY(${translate})`
+      }
     }
   },
   created() {

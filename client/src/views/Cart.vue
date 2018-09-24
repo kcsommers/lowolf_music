@@ -22,7 +22,7 @@
           <div id="total-wrapper">
             <p>Order Total: $5.00</p>
           </div>
-          <router-link id="checkout-link" to="/checkout">Proceed to Checkout</router-link>
+          <router-link id="checkout-link" :to="{name: 'checkout', query: {cart: items}}">Proceed to Checkout</router-link>
         </div>
       </div>
 
@@ -48,7 +48,8 @@ export default {
       if(cart && cart.items.length) {
         let data = {items: cart.items}
         const items = await Api().post('/items', data)
-        this.items = items.data[0]
+        this.items = items.data
+        console.log(this.items)
       }
       else {
         console.log('NO ITEMS IN CART')

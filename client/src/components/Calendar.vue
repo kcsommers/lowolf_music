@@ -4,22 +4,30 @@
       <span @click="this.handleUpcomingClick" class="dates-active">Upcoming Dates</span>
       <span @click="this.handlePastClick">Past Dates</span>
     </div>
-    <div class="calendar-row" v-for="(show) in displayedShows" :key="show.id">
-      <div class="calendar-row-wrapper">
+    <div class="calendar-row" v-for="(show, i) in displayedShows" :key="show.id">
+      <div v-if="full || i < 4" class="calendar-row-wrapper">
         <div class="calendar-col show-date">
           <p>{{show.date}}</p>
         </div>
         <div class="calendar-col show-location">
           <p class="show-city">{{show.city}}</p>
-          <p class="show-venue"><a :href="show.link" target="_blank">{{show.venue}}</a></p>
+          <p class="show-venue">
+            <a :href="show.link" target="_blank">{{show.venue}}</a>
+          </p>
         </div>
         <div class="calendar-col show-btns">
-          <button class="button">Tickets</button>
-          <button class="button">RSVP</button>
+          <div v-if="page === 'admin'" id="show-admin-btns">
+            <button id="going-btn">Going: {{show.rsvp}}</button>
+            <button @click="deleteShow(show.id)" class="delete-btn">Delete Show</button>
+          </div>
+          <div v-else id="show-rsvp-btns">
+            <a :href="show.link" class="button">Tickets</a>
+            <button v-if="displaying === 'upcoming'" @click="rsvpClick(show.id)" class="button">RSVP</button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="view-full-calendar">
+    <div v-if="page !== 'admin'" class="view-full-calendar">
       <button>View Full Calendar</button>
     </div>
   </div>
@@ -28,23 +36,52 @@
 <script>
 import Api from '@/services/Api'
 export default {
+  name: 'calendar',
+  props: {
+    full: Boolean,
+    page: String
+  },
   data() {
     return {
       allShows: [],
-      displayedShows: []
+      displayedShows: [],
+      displaying: '',
+      rsvpd: false
     }
   },
   methods: {
     async fetchShows() {
       const shows = await Api().get('shows')
       this.allShows = shows.data
-      this.displayedShows = shows.data.upcoming
+      this.displayedShows = this.allShows.upcoming
+      this.displaying = 'upcoming'
+    },
+    addShow(show) {
+      this.allShows.upcoming.push(show)
+      this.displayedShows = this.allShows.upcoming
     },
     handlePastClick() {
       this.displayedShows = this.allShows.past
+      this.displaying = 'past'
     },
     handleUpcomingClick() {
       this.displayedShows = this.allShows.upcoming
+      this.displaying = 'upcoming'
+    },
+    async deleteShow(id) {
+      if(this.displaying === 'upcoming') {
+        this.allShows.upcoming = this.allShows.upcoming.filter((show) => show.id !== id);
+        this.displayedShows = this.allShows.upcoming
+      }
+      else {
+        this.allShows.past = this.allShows.past.filter((show) => show.id !== id);
+        this.displayedShows = this.allShows.past
+      }
+      const response = await Api().delete(`/shows/${id}`)
+    },
+    async rsvpClick(id) {
+      const response = await Api().put(`/shows/rsvp/${id}`)
+      this.rsvpd = true
     }
   },
   mounted() {
@@ -92,8 +129,9 @@ export default {
 
       .show-btns {
         text-align: right;
-        button {
+        a, button {
           @extend %button2-styles;
+          margin-left: 1em;
         }
       }
     }

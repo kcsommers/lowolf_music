@@ -7,7 +7,7 @@
       <p class="album-name">Country Pop Hit EP <a href="https://itunes.apple.com/us/album/country-pop-hit-ep/id1238955286"><i class="fab fa-itunes"></i></a><a href="https://lowolf.bandcamp.com/album/country-pop-hit"><i class="fab fa-bandcamp"></i></a></p>
       <p class="album-year">2017</p>
       <div class="tracklist">
-        <p class="track"><span>1. Kill No More</span><span><i class="far fa-play-circle"></i></span></p>
+        <p @click="playAudio('https://soundcloud.com/user-991342239/no-surprise-take-2/s-9xUfR')" class="track"><span>1. Kill No More</span><span><i class="far fa-play-circle"></i></span></p>
         <p class="track"><span>2. Plug in the Iron</span><span><i class="far fa-play-circle"></i></span></p>
         <p class="track"><span>3. Dog 1</span><span><i class="far fa-play-circle"></i></span></p>
         <p class="track"><span>4. Gone are the Days</span><span><i class="far fa-play-circle"></i></span></p>
@@ -31,15 +31,15 @@ export default {
   name: 'Album',
   data() {
     return {
-      selected: 2,
+      selected: 8,
       options: [
         {
           text: 'Country Pop Hit EP - Hard Copy', 
-          id: 2
+          id: 8
         },
         {
           text: 'Country Pop Hit EP - Digital Download',
-          id: 3
+          id: 9
         }
       ]
     }
@@ -47,9 +47,13 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault()
-      let cart = sessionStorage.hasOwnProperty('loCart') ? JSON.parse(sessionStorage.getItem('cart')) : {items: []}
+      let cart = sessionStorage.hasOwnProperty('loCart') ? JSON.parse(sessionStorage.getItem('loCart')) : {items: []}
       cart.items.push(this.selected)
       sessionStorage.setItem('loCart', JSON.stringify(cart))
+    },
+    playAudio(track) {
+      const audio = new Audio(track)
+      audio.play()
     }
   }
 }

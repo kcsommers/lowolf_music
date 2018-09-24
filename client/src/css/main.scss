@@ -8,6 +8,7 @@
 
 html, body {
   position: relative;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -56,6 +57,7 @@ a {
   border-radius: 30px;
   border: none;
   cursor: pointer;
+  outline: none;
 }
 
 @import 'animations';
