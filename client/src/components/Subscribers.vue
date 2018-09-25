@@ -2,16 +2,16 @@
   <div id="subscribers">
     <span id="newbie-count" v-if="newbies">{{newbies}} New</span>
     <div id="subscribers-wrapper">
-      <div id="subscriber-row" v-for="subscriber in subscribers" :key="subscriber.name">
+      <div id="subscriber-row" v-for="(subscriber, i) in subscribers" :key="subscriber.name">
         <p id="subscriber-name">
           {{subscriber.name}}
         </p>
+        <p v-if="subscriber.new" id="new-subscriber-btns">
+          <button>New</button>
+          <button @click="notNew(subscriber.id, i)">mark as not new</button>
+        </p>
         <p id="subscriber-email">
           {{subscriber.email}}
-        </p>
-        <p id="new-subscriber-btns">
-          <button>New</button>
-          <button>mark as not new</button>
         </p>
       </div>
     </div>
@@ -35,6 +35,11 @@ export default {
       this.subscribers.forEach(subscriber => {
         if(subscriber.new) this.newbies += 1
       });
+    },
+    async notNew(id, index) {
+      const results = await Api().put(`subscribers/${id}`)
+      this.subscribers[index].new = false
+      this.newbies -= 1
     }
   },
   mounted() {
@@ -63,16 +68,19 @@ export default {
       display: flex;
       border-bottom: 1px solid #fff;
       align-items: center;
+      justify-content: space-between;
+
       p {
         color: #fff;
-        padding: 1em 2em 1em 0;
+        padding: 1em;
+        font-size: 1.2em;
       }
 
       #new-subscriber-btns {
         flex: 1;
-        text-align: right;
         button {
           @extend %button2-styles;
+          font-size: 0.8em;
         }
 
         button:first-child {

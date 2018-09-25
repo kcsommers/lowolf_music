@@ -1,8 +1,8 @@
 <template>
   <nav class="nav" id="main-nav" ref="main-nav">
-    <div class="nav-wrapper" :style="navStyle">
+    <div class="nav-wrapper" :style="this.$store.state.navStyle">
       <div class="nav-left">
-        <div :style="logoStyle" id="logo-wrapper">
+        <div :style="this.$store.state.logoStyle" id="logo-wrapper">
           <router-link to="/" @click.native="changePage('home')">Lo Wolf</router-link>
         </div>
       </div>
@@ -26,56 +26,31 @@ export default {
   nav: '',
   data() {
     return {
-      navStyle: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        height: '100px',
-        alignItems: 'center',
-        padding: '0 4em',
-        position: 'fixed',
-        width: '100%',
-        backgroundColor: 'rgba(0,0,0,0)',
-        transition: 'all 0.6s ease'
-      },
-      logoStyle: {
-        opacity: 0,
-        transition: 'all 0.6s ease'
-      }
+      
     }
   },
   methods: {
     setNavHeight() {
       if(this.$store.state.page === 'home') {
         if(window.scrollY > 0) {
-          this.navStyle.height = '70px'
-          this.navStyle.backgroundColor = '#fdf5e6'
-          this.logoStyle.opacity = 1
+          this.$store.state.navStyle.height = '70px'
+          this.$store.state.navStyle.backgroundColor = '#fdf5e6'
+          this.$store.state.logoStyle.opacity = 1
         }
         else {
-          this.navStyle.height = '100px'
-          this.navStyle.backgroundColor = 'rgba(0,0,0,0)'
-          this.logoStyle.opacity = 0
+          this.$store.state.navStyle.height = '100px'
+          this.$store.state.navStyle.backgroundColor = 'rgba(0,0,0,0)'
+          this.$store.state.logoStyle.opacity = 0
         }
       }
     },
     changePage(page) {
       this.$store.commit('pageChange', {page})
-      if(page !== 'home') {
-        this.navStyle.height = '70px'
-        this.navStyle.backgroundColor = '#fdf5e6'
-        this.logoStyle.opacity = 1
-      }
-      else {
-        if(window.scrollY === 0) {
-          this.navStyle.height = '100px'
-          this.navStyle.backgroundColor = 'rgba(0,0,0,0)'
-          this.logoStyle.opacity = 0
-        }
-      }
     }
   },
   created() {
     EventBus.$on('windowScrolled', this.setNavHeight)
+    console.log(this.$store.state.navStyle)
   }
 }
 </script>

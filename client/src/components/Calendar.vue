@@ -27,8 +27,8 @@
         </div>
       </div>
     </div>
-    <div v-if="page !== 'admin'" class="view-full-calendar">
-      <button>View Full Calendar</button>
+    <div v-if="!full" class="view-full-calendar">
+      <router-link id="full-cal-link" to="/calendar">View Full Calendar</router-link>
     </div>
   </div>
 </template>
@@ -139,8 +139,8 @@ export default {
 
   .view-full-calendar {
     text-align: center;
-    padding: 1em 0;
-    button {
+    padding: 2em 0;
+    #full-cal-link {
       @extend %button2-styles;
     }
   }

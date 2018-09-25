@@ -5,6 +5,7 @@ import Cart from './views/Cart.vue'
 import Checkout from './views/Checkout.vue'
 import AdminLogin from './views/AdminLogin.vue'
 import AdminPage from './views/AdminPage.vue'
+import CalendarPage from './views/CalendarPage.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ const router = new Router({
       props(route) {
         return {cart: route.query.cart}
       }
+    },
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: CalendarPage
     },
     {
       path: '/admin',

@@ -39,13 +39,24 @@ router.post('/', function(req, res) {
   });
 });
 
+router.put('/:id', function(req, res) {
+  db.transaction.update({
+    fulfilled: true
+  }, {
+    where: {
+      id: req.params.id
+    }
+  }).then(() => {
+    res.sendStatus(200)
+  });
+});
+
 // POST /TRANSACTIONS/CHARGE create stripe charge
 router.post('/charge', function(req, res) {
-  console.log(req.body.id);
   const charge = stripe.charges.create({
     amount: 100,
     currency: 'usd',
-    description: 'Test Charge',
+    description: 'Lo Wolf Music Transaction',
     source: req.body.id
   }).then((result) => {
     res.json({status: 200});

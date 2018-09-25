@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const auth = require('./controllers/auth');
 const shows = require('./controllers/shows');
 const transactions = require('./controllers/transactions');
+const subscribers = require('./controllers/subscribers');
 
 app.use(express.static(__dirname + '/static'));
 app.use(bp.json());
@@ -17,19 +18,7 @@ app.use(cors({origin}));
 app.use('/auth', auth.router);
 app.use('/shows', shows.router);
 app.use('/transactions', transactions.router);
-
-
-// POST /subscribe - create a new subscriber
-app.post('/subscribe', function(req, res) {
-  console.log("HIT POST SUBSCRIBE ROUTE");
-  db.subscriber.create({
-    name: req.body.name,
-    email: req.body.email,
-    new: true
-  }).then(function(data) {
-    res.send(data);
-  });
-});
+app.use('/subscribers', subscribers.router);
 
 app.post('/items/new', function(req, res) {
   console.log(req.body.imgUrl)
@@ -62,13 +51,6 @@ app.get('/admin', auth.verifyToken, function(req, res) {
     else {
       res.json({authData, verified: true});
     }
-  });
-});
-
-app.get('/subscribers', function(req, res) {
-  console.log('HIT SUBSCRIBERS GET ROUTE');
-  db.subscriber.findAll().then(function(subscribers) {
-    res.json(subscribers);
   });
 });
 

@@ -1,7 +1,7 @@
 <template>
   <main id="admin-page">
     <div id="admin-wrapper">
-      <h5>Dashboard</h5>
+      <h5 id="dashboard-title">Dashboard</h5>
       <section id="transactions-section">
         <h2 class="admin-title">Orders</h2>
         <TransactionTable />
@@ -43,8 +43,8 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$store.dispatch('changePage')
+  created() {
+    this.$store.commit('pageChange', {page: 'admin-page'})
   }
 }
 </script>
@@ -52,7 +52,7 @@ export default {
 <style lang="scss">
 @import '@/css/main.scss';
 #admin-page {
-  h5 {
+  #dashboard-title {
     color: #fff;
     text-align: right;
   }

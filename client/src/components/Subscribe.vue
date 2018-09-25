@@ -26,7 +26,7 @@ export default {
         name: this.name,
         email: this.email
       }
-      const response = await Api().post('subscribe', data)
+      const response = await Api().post('subscribers/subscribe', data)
     }
   }
 }

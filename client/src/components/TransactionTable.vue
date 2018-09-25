@@ -18,9 +18,10 @@
         </div>
       </div>
 
-      <div v-for="trans in transactions" 
+      <div v-for="(trans, i) in transactions" 
            class="trans-row" 
-           :class="{unfulfilled: !trans.fulfilled}"
+           :class="{unfulfilled: !trans.fulfilled, fulfilled: trans.fulfilled}"
+           @click="openModal(i)"
            :key="trans.id">
         <div class="date-col trans-col">
           <p>{{trans.createdAt.split('T')[0]}}</p>
@@ -38,17 +39,26 @@
     <div v-else id="no-trans-wrapper">
       <h2>No unfulfilled orders.</h2>
     </div>
+    <div v-if="showModal">
+      <Modal :info="modalInfo" @closeModal="closeModal" @orderFulfilled="orderFulfilled"/>
+    </div>
   </div>
 </template>
 
 <script>
 import Api from '@/services/Api'
+import Modal from '@/components/Modal'
 export default {
   name: 'transaction-table',
+  components: {
+    Modal
+  },
   data() {
     return {
       transactions: [],
-      unfulfilled: 0
+      unfulfilled: 0,
+      modalInfo: {},
+      showModal: false
     }
   },
   methods: {
@@ -60,6 +70,20 @@ export default {
         }
       });
       this.transactions = transactions.data
+    },
+    openModal(index) {
+      this.modalInfo = this.transactions[index]
+      this.modalInfo.transIndex = index
+      this.showModal = true
+    },
+    closeModal() {
+      this.modalInfo = {}
+      this.showModal = false
+    },
+    async orderFulfilled(value) {
+      const results = await Api().put(`transactions/${value.id}`)
+      this.transactions[value.index].fulfilled = true
+      this.unfulfilled -= 1
     }
   },
   mounted() {
@@ -85,10 +109,6 @@ export default {
       color: #a9c5e8;
     }
   }
-
-  h3, p {
-    color: #fff;
-  }
   #trans-table-wrapper {
 
     .unfulfilled {
@@ -100,11 +120,20 @@ export default {
       padding: 1em 0.5em;
       align-items: center;
       border-bottom: 1px solid #fff;
+      cursor: pointer;
+      h3, p {
+        color: #fff;
+      }
+    }
+
+    .trans-row:hover {
+      box-shadow: 1px 6px 15px #000;
     }
 
     .trans-row:first-child {
       border-bottom: 3px solid #fff;
       padding: 0.5em;
+      box-shadow: 1px 6px 15px #000;
     }
 
     .trans-col {
