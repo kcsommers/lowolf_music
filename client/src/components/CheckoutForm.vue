@@ -47,7 +47,8 @@
       </div>
       <StripeCheckout v-on:error="updateMessage" 
                       :buyerInfo="buyerInfo"
-                      :cart="cart" />
+                      :cart="cart"
+                      @checkoutComplete="handleComplete" />
       <h3 v-show="errMsg">{{errMsg}}</h3>
     </div>
   </div>
@@ -85,23 +86,26 @@ export default {
   computed: {
     totalAmount() {
       let total = 0;
-      this.cart.forEach((item) => {total += item.price})
+      this.cart.forEach((item) => {total += item.item.price})
       return total.toFixed(2)
     }
   },
   methods: {
     countItems() {
       this.cart.forEach((item) => {
-        if(this.itemCounts.hasOwnProperty(item.id)) {
+        if(this.itemCounts.hasOwnProperty(item.item.id)) {
           this.itemCounts[item.id][1] += 1
         }
         else {
-          this.itemCounts[item.id] = [item.name, 1]
+          this.itemCounts[item.item.id] = [item.item.name, 1]
         }
       })
     },
     updateMessage() {
       this.errMsg = 'Please fill out required fields'
+    },
+    handleComplete() {
+      this.$emit('checkoutComplete')
     }
   },
   created() {

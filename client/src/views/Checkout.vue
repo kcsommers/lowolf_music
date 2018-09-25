@@ -2,7 +2,7 @@
   <main id="checkout">
     <div id="checkout-wrapper">
       <section v-if="showForm" id="form">
-        <CheckoutForm :cart="cart" />
+        <CheckoutForm :cart="cart" @checkoutComplete="handleComplete" />
       </section>
 
       <section v-else id="results">
@@ -28,6 +28,14 @@ export default {
     return {
       showForm: true
     }
+  },
+  methods: {
+    handleComplete() {
+      this.showForm = false
+    }
+  },
+  created() {
+    this.$store.commit('pageChange', {page: 'checkout'})
   }
 }
 </script>

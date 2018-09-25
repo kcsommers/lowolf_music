@@ -49,7 +49,19 @@ const router = new Router({
         requiresAuth: true
       }
     }
-  ]
+  ],
+  scrollBehavior: (to, from, savedPosition) => {
+    if(to.hash) {
+      let section = document.getElementById(to.hash.split('#')[1])
+      return {x: 0, y: section.offsetTop - 70}
+    }
+    else if(savedPosition) {
+      return savedPosition
+    }
+    else {
+      return {x: 0, y: 0}
+    }
+  }
 });
 
 router.beforeEach((to, from, next) => {

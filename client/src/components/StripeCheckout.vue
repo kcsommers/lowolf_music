@@ -45,6 +45,7 @@ export default {
       e.preventDefault()
       let info = this.buyerInfo
       let cart = this.cart
+      const that = this
       if(!info.name || !info.email || !info.city || !info.state || !info.address1 || !info.zip) {
         this.$emit('error')
       }
@@ -64,6 +65,7 @@ export default {
                   console.log('TRANSACTION', result.data)
                   if(result.data.status === 200) {
                     console.log('success')
+                    that.$emit('checkoutComplete')
                   }
                   else {
                     console.log('error')

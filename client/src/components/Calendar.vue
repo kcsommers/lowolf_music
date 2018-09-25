@@ -22,7 +22,7 @@
           </div>
           <div v-else id="show-rsvp-btns">
             <a :href="show.link" class="button">Tickets</a>
-            <button v-if="displaying === 'upcoming'" @click="rsvpClick(show.id)" class="button">RSVP</button>
+            <button v-if="displaying === 'upcoming'" @click="rsvpClick(show.id)" class="button" id="rsvp-btn">RSVP</button>
           </div>
         </div>
       </div>
@@ -60,11 +60,17 @@ export default {
       this.allShows.upcoming.push(show)
       this.displayedShows = this.allShows.upcoming
     },
-    handlePastClick() {
+    handlePastClick(e) {
+      let active = document.getElementsByClassName('dates-active')[0]
+      active.classList.remove('dates-active')
+      e.target.classList.add('dates-active')
       this.displayedShows = this.allShows.past
       this.displaying = 'past'
     },
-    handleUpcomingClick() {
+    handleUpcomingClick(e) {
+      let active = document.getElementsByClassName('dates-active')[0]
+      active.classList.remove('dates-active')
+      e.target.classList.add('dates-active')
       this.displayedShows = this.allShows.upcoming
       this.displaying = 'upcoming'
     },
@@ -97,6 +103,7 @@ export default {
   .dates-links {
     span {
       margin-right: 0.7em;
+      cursor: pointer;
     }
 
     .dates-active {
@@ -132,6 +139,15 @@ export default {
         a, button {
           @extend %button2-styles;
           margin-left: 1em;
+        }
+
+        #rsvp-btn {
+          background-color: #a9c5e8;
+          color: #fff;
+        }
+
+        #rsvp-btn:hover {
+          background-color: #444;
         }
       }
     }

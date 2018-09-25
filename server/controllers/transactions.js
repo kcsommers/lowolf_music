@@ -18,8 +18,8 @@ const forEachCallBack = function(req, arr) {
 };
 
 router.get('/', function(req, res) {
-  db.transaction.findAll({include: [db.item]}).then((results) => {
-    res.send(results);
+  db.transaction.findAll({include: [db.item], order: [['createdAt', 'DESC']]}).then((transactions) => {
+    res.send(transactions);
   });
 });
 

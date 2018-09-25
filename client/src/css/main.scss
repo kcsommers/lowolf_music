@@ -57,7 +57,13 @@ a {
   border-radius: 30px;
   border: none;
   cursor: pointer;
+  transition: all 0.2s ease;
   outline: none;
+}
+
+%button2-styles:hover {
+  background-color: #444;
+  color: #fff;
 }
 
 @import 'animations';
