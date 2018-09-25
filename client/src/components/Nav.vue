@@ -6,12 +6,23 @@
           <router-link to="/" @click.native="changePage('home')">Lo Wolf</router-link>
         </div>
       </div>
-      <div class="nav-right">
-        <a href="#">About</a>
-        <a href="#">Music</a>
-        <a href="#">Media</a>
+      <div v-if="this.$store.state.page === 'home'" class="nav-right">
+        <a @click="handleNavClick" href="#shows-section">Shows</a>
+        <a @click="handleNavClick" href="#music-section">Music</a>
+        <a @click="handleNavClick" href="#videos-section">Videos</a>
+        <a @click="handleNavClick" href="#about-section">About</a>
         <router-link to="/cart" @click.native="changePage('cart')">Cart</router-link>
-        <a href="#">Contact</a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+
+      <div v-else class="nav-right">
+        <router-link to="/#shows-section">Shows</router-link>
+        <router-link to="/#music-section">Music</router-link>
+        <router-link to="/#videos-section">Videos</router-link>
+        <router-link to="/#about-section">About</router-link>
+        <router-link to="/cart" @click.native="changePage('cart')">Cart</router-link>
         <a href="#"><i class="fab fa-facebook"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -44,13 +55,18 @@ export default {
         }
       }
     },
+    handleNavClick(e) {
+      e.preventDefault()
+      let section = document.getElementById(e.target.href.split('/#')[1])
+      let top = section.offsetTop - 70
+      window.scroll({top, left: 0, behavior: 'smooth'})
+    },
     changePage(page) {
       this.$store.commit('pageChange', {page})
     }
   },
   created() {
     EventBus.$on('windowScrolled', this.setNavHeight)
-    console.log(this.$store.state.navStyle)
   }
 }
 </script>

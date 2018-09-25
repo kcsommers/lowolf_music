@@ -76,6 +76,10 @@ export default {
         font-size: 2em;
         a {
           margin: 0 0.2em;
+
+          i {
+            color: #a9c5e8;
+          }
         }
       }
 

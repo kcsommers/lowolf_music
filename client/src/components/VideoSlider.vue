@@ -22,19 +22,20 @@
 <script>
 import laura_laura from '@/assets/images/laura_laura.jpg'
 import laura_laura2 from '@/assets/images/laura_laura2.jpg'
+import lobus from '@/assets/images/lobus.jpg'
 export default {
   name: 'videoSlider',
   data() {
     return {
       videos: [
         {
-          video: laura_laura,
+          video: laura_laura2,
           alt: 'Lo Wolf and Laura Blackley',
           id: 0
         },
         {
-          video: laura_laura2,
-          alt: 'Lo Wolf and Laura Blackley',
+          video: lobus,
+          alt: 'Lo Wolf at the Asheville Coffee Bus',
           id: 1
         },
         {

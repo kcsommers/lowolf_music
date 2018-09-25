@@ -1,11 +1,11 @@
 <template>
   <div id="transaction-table">
     <div id="trans-tabs">
-      <span>{{unfulfilled}} Unfulfilled</span>
-      <span>Fulfilled</span>
-      <span class="active-tab">All Orders</span>
+      <span @click="changeDisplay($event, 'unfulfilled')">{{unfulfilled.length}} Unfulfilled</span>
+      <span @click="changeDisplay($event, 'fulfilled')">Fulfilled</span>
+      <span @click="changeDisplay($event, 'all')" class="active-tab">All Orders</span>
     </div>
-    <div v-if="transactions.length" id="trans-table-wrapper">
+    <div v-if="all.length" id="trans-table-wrapper">
       <div class="trans-row">
         <div class="date-col trans-col" id="trans-date">
           <h3>Date</h3>
@@ -18,9 +18,9 @@
         </div>
       </div>
 
-      <div v-for="(trans, i) in transactions" 
+      <div v-for="(trans, i) in displaying" 
            class="trans-row" 
-           :class="{unfulfilled: !trans.fulfilled, fulfilled: trans.fulfilled}"
+           :class="{unfulfilled: !trans.fulfilled}"
            @click="openModal(i)"
            :key="trans.id">
         <div class="date-col trans-col">
@@ -55,8 +55,10 @@ export default {
   },
   data() {
     return {
-      transactions: [],
-      unfulfilled: 0,
+      all: [],
+      unfulfilled: [],
+      fulfilled: [],
+      displaying: [],
       modalInfo: {},
       showModal: false
     }
@@ -66,13 +68,23 @@ export default {
       const transactions = await Api().get('transactions')
       transactions.data.forEach((trans) => {
         if(!trans.fulfilled) {
-          this.unfulfilled += 1
+          this.unfulfilled.push(trans)
+        }
+        else {
+          this.fulfilled.push(trans)
         }
       });
-      this.transactions = transactions.data
+      this.all = transactions.data
+      this.displaying = this.all
+    },
+    changeDisplay(e, orders) {
+      let active = document.getElementsByClassName('active-tab')[0];
+      active.classList.remove('active-tab')
+      e.target.classList.add('active-tab')
+      this.displaying = this[orders];
     },
     openModal(index) {
-      this.modalInfo = this.transactions[index]
+      this.modalInfo = this.displaying[index]
       this.modalInfo.transIndex = index
       this.showModal = true
     },

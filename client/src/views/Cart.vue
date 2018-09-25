@@ -8,19 +8,19 @@
             <img src="@/assets/images/countrypop.png" alt="Country Pop Hit" />
           </div>
           <div class="item-info">
-            <h3>{{item.name}}</h3>
-            <p>${{item.price}}.00</p>
+            <h3>{{item.item.name}}</h3>
+            <p>${{item.item.price}}.00</p>
           </div>
           <div class="item-actions">
             <div class="item-quantity">
-              <span>Quantity: </span><span><i class="fas fa-minus"></i><span id="number">1</span><i class="fas fa-plus"></i></span>
+              <span>Quantity: </span><span><i @click="updateQuantity(-1)" class="fas fa-minus"></i><span id="quantity">{{item.quantity}}</span><i @click="updateQuantity(1)" class="fas fa-plus"></i></span>
             </div>
             <button>Remove from Cart</button>
           </div>
         </div>
         <div id="checkout-link-wrapper">
           <div id="total-wrapper">
-            <p>Order Total: $5.00</p>
+            <p>Order Total: ${{total}}.00</p>
           </div>
           <router-link id="checkout-link" :to="{name: 'checkout', query: {cart: items}}">Proceed to Checkout</router-link>
         </div>
@@ -39,22 +39,52 @@ export default {
   name: 'cart',
   data() {
     return {
-      items: []
+      items: [],
+      total: 0
     }
   },
   methods: {
     async fetchItems() {
+      this.items = []
       let cart = (sessionStorage.hasOwnProperty('loCart')) ? JSON.parse(sessionStorage.loCart) : null
       if(cart && cart.items.length) {
         let data = {items: cart.items}
         const items = await Api().post('/items', data)
-        this.items = items.data
+        this.items.push({
+          item: items.data[0], 
+          id: items.data[0].id, 
+          quantity: 1
+        })
+        
+        items.data.forEach((item, i) => {
+          console.log(i)
+          this.total += item.price
+          if(i > 0) {
+            let obj = this.items.find((el) => el.id === item.id)
+            if(obj) {
+              obj.quantity += 1
+            }
+            else {
+              this.items.push({
+                item: item,
+                id: item.id,
+                quantity: 1
+              })
+            }
+          }
+        })
         console.log(this.items)
       }
       else {
         console.log('NO ITEMS IN CART')
       }
+    },
+    updateQuantity(num) {
+
     }
+  },
+  created() {
+    this.$store.commit('pageChange', {page: 'cart'})
   },
   mounted() {
     this.fetchItems()
@@ -95,7 +125,7 @@ export default {
             margin-right: 1em;
           }
 
-          #number {
+          #quantity {
             font-size: 1.5em;
             padding: 0 0.5em;
           }
@@ -122,10 +152,6 @@ export default {
     }
 
     text-align: right;
-  }
-
-  #no-items-display {
-
   }
 }
 </style>

@@ -51,6 +51,9 @@ export default {
     Videos,
     About,
     Subscribe
+  },
+  created() {
+    this.$store.commit('pageChange', {page: 'home'})
   }
 }
 </script>
