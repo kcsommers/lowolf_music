@@ -11,6 +11,7 @@ const auth = require('./controllers/auth');
 const shows = require('./controllers/shows');
 const transactions = require('./controllers/transactions');
 const subscribers = require('./controllers/subscribers');
+const path = require('path');
 
 app.use(express.static(__dirname + '/static'));
 app.use(bp.json());
@@ -52,6 +53,11 @@ app.get('/admin', auth.verifyToken, function(req, res) {
       res.json({authData, verified: true});
     }
   });
+});
+
+app.get('*', function(req, res) {
+  console.log('HIT GET BUILD INDEX ROUTE')
+  res.sendFile('index.html', {root: path.join(__dirname, '../client/dist')});
 });
 
 app.listen(port, () => {
