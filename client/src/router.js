@@ -38,16 +38,16 @@ const router = new Router({
     },
     {
       path: '/admin',
-      name: 'admin-login',
-      component: AdminLogin
-    },
-    {
-      path: '/admin-page',
-      name: 'admin-page',
+      name: 'admin',
       component: AdminPage,
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/admin-login',
+      name: 'admin-login',
+      component: AdminLogin
     }
   ],
   scrollBehavior: (to, from, savedPosition) => {
