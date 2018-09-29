@@ -52,10 +52,9 @@ export default {
             Authorization: 'Bearer ' + token
           }
         });
-        console.log('Verified', verified)
         const authUser = {user: user.name, token}
         localStorage.setItem('authUser', JSON.stringify(authUser));
-        this.$router.push('admin-page')
+        this.$router.push('admin')
       }
       catch(err) {
         this.message = 'Unauthorized'
