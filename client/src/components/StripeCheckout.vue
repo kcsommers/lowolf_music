@@ -58,7 +58,7 @@ export default {
             const token = result.token
             Api().post('/transactions/charge', token).then((result) => {
               if(result.data.status === 400) {
-                console.log('error')
+                console.log('error', result.data.err)
               }
               else {
                 Api().post('/transactions', {info, cart}).then((result) => {

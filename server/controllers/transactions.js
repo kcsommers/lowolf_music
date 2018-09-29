@@ -53,6 +53,7 @@ router.put('/:id', function(req, res) {
 
 // POST /TRANSACTIONS/CHARGE create stripe charge
 router.post('/charge', function(req, res) {
+  console.log(req.body.id)
   const charge = stripe.charges.create({
     amount: 100,
     currency: 'usd',
@@ -61,7 +62,7 @@ router.post('/charge', function(req, res) {
   }).then((result) => {
     res.json({status: 200});
   }).catch(err => {
-    res.json({status: 400});
+    res.json({status: 400, err});
   });
 });
 
